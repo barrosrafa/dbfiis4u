@@ -1,0 +1,57 @@
+INSERT INTO dbfiis4u.administration (name,cnpj,phone,email) VALUES
+	 ('BRL TRUST',0,0,''),
+	 ('XP INVESTIMENTOS',0,0,''),
+	 ('RIO BRAVO',0,0,''),
+	 ('BTG PACTUAL',0,0,''),
+	 ('BANCO GENIAL',0,0,''),
+	 ('MAF',0,0,''),
+	 ('VÓRTX',0,0,''),
+	 ('GENIAL INVESTIMENTOS',0,0,''),
+	 ('RJI',0,0,''),
+	 ('OLIVEIRA TRUST',0,0,'');
+INSERT INTO dbfiis4u.administration (name,cnpj,phone,email) VALUES
+	 ('HEDGE INVESTMENTS',0,0,''),
+	 ('REAG',0,0,''),
+	 ('BANCO DAYCOVAL',0,0,''),
+	 ('BB GESTAO DE RECURSOS',0,0,''),
+	 ('BV DTVM',0,0,''),
+	 ('BANCO BRADESCO',0,0,''),
+	 ('INTER DTVM',0,0,''),
+	 ('FRAM Capital',0,0,''),
+	 ('MODAL ASSET',0,0,''),
+	 ('null',0,0,'');
+INSERT INTO dbfiis4u.administration (name,cnpj,phone,email) VALUES
+	 ('TRUSTEE DTVM',0,0,''),
+	 ('CREDIT SUISSE',0,0,''),
+	 ('SINGULARE',0,0,''),
+	 ('ID CORRETORA DE TITULOS E VALORES MOBILIARIOS S.A.',0,0,''),
+	 ('CAIXA ECONOMICA FEDERAL',0,0,''),
+	 ('PLANNER',0,0,''),
+	 ('BNY MELLON',0,0,''),
+	 ('VOTORANTIM ASSET',0,0,''),
+	 ('COINVALORES',0,0,''),
+	 ('BANCO OURINVEST S.A.',0,0,'');
+INSERT INTO dbfiis4u.administration (name,cnpj,phone,email) VALUES
+	 ('BR-CAPITAL',0,0,''),
+	 ('PLANNER CORRETORA',0,0,''),
+	 ('CM CAPITAL MARKETS',0,0,''),
+	 ('TIVIO CAPITAL',0,0,''),
+	 ('SANTANDER CACEIS ',0,0,''),
+	 ('WARREN',0,0,''),
+	 ('INTRAG',0,0,''),
+	 ('BEM DTVM',0,0,''),
+	 ('FINAXIS CORRETORA',0,0,''),
+	 ('BANCO FINAXIS',0,0,'');
+INSERT INTO dbfiis4u.administration (name,cnpj,phone,email) VALUES
+	 ('BANCO J. SAFRA',0,0,''),
+	 ('MÉRITO',0,0,''),
+	 ('APEX',0,0,''),
+	 ('PLURAL',0,0,''),
+	 ('TERRA',0,0,''),
+	 ('S3 CACEIS',0,0,''),
+	 ('BTG PATCUAL',0,0,''),
+	 ('BRB DTVM',0,0,''),
+	 ('SANTANDER SECURITIES',0,0,''),
+	 ('FOCO',0,0,'');
+INSERT INTO dbfiis4u.administration (name,cnpj,phone,email) VALUES
+	 ('BANCO FATOR',0,0,'');
