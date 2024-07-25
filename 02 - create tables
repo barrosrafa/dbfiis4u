@@ -1,0 +1,118 @@
+-- dbfiis4u.administration definition
+
+CREATE TABLE `administration` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  `cnpj` bigint DEFAULT NULL,
+  `phone` int DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- dbfiis4u.classification definition
+
+CREATE TABLE `classification` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(150) DEFAULT NULL,
+  `isPaper` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- dbfiis4u.fee definition
+
+CREATE TABLE `fee` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `managementFee` decimal(10,0) DEFAULT NULL,
+  `admFee` decimal(10,0) DEFAULT NULL,
+  `performanceFee` decimal(10,0) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- dbfiis4u.manager definition
+
+CREATE TABLE `manager` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  `cnpj` bigint DEFAULT NULL,
+  `phone` int DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=209 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- dbfiis4u.ticker definition
+
+CREATE TABLE `ticker` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `acronym` varchar(6) NOT NULL,
+  `fundName` varchar(150) DEFAULT NULL,
+  `numQuotaHolders` int DEFAULT NULL,
+  `assetQuantities` int DEFAULT NULL,
+  `ipoDate` date DEFAULT NULL,
+  `fundSite` varchar(150) DEFAULT NULL,
+  `percentageCash` decimal(15,2) DEFAULT NULL,
+  `typeManagement` enum('Ativa','Passiva') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `numQuotas` int DEFAULT NULL,
+  `cnpj` bigint DEFAULT NULL,
+  `active` tinyint(1) DEFAULT NULL,
+  `classificationId` int DEFAULT NULL,
+  `administrationId` int DEFAULT NULL,
+  `managerId` int DEFAULT NULL,
+  `feeId` int DEFAULT NULL,
+  `targetAudience` enum('geral','qualificado','profissional','qp') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `classification_ticker` (`classificationId`),
+  KEY `administration_ticker` (`administrationId`),
+  KEY `manager_ticker` (`managerId`),
+  KEY `fee_ticker` (`feeId`),
+  CONSTRAINT `administration_ticker` FOREIGN KEY (`administrationId`) REFERENCES `administration` (`id`),
+  CONSTRAINT `classification_ticker` FOREIGN KEY (`classificationId`) REFERENCES `classification` (`id`),
+  CONSTRAINT `fee_ticker` FOREIGN KEY (`feeId`) REFERENCES `fee` (`id`),
+  CONSTRAINT `manager_ticker` FOREIGN KEY (`managerId`) REFERENCES `manager` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=647 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- dbfiis4u.dividend definition
+
+CREATE TABLE `dividend` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `comDate` date DEFAULT NULL,
+  `exDate` date DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `tickerId` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ticker_dividend` (`tickerId`),
+  CONSTRAINT `ticker_dividend` FOREIGN KEY (`tickerId`) REFERENCES `ticker` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=941 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- dbfiis4u.historicalData definition
+
+CREATE TABLE `historicalData` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `date` date DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `vol` decimal(10,2) DEFAULT NULL,
+  `tickerId` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ticker_historicalData` (`tickerId`),
+  CONSTRAINT `ticker_historicalData` FOREIGN KEY (`tickerId`) REFERENCES `ticker` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=648 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- dbfiis4u.issuances definition
+
+CREATE TABLE `issuances` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `dateBase` date DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `marketCap` decimal(15,2) DEFAULT NULL,
+  `numQuotas` int DEFAULT NULL,
+  `tickerId` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ticker_issuances` (`tickerId`),
+  CONSTRAINT `ticker_issuances` FOREIGN KEY (`tickerId`) REFERENCES `ticker` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1059 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
