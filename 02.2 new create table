@@ -1,0 +1,114 @@
+-- dbfiis4u.administration definition
+
+CREATE TABLE administration (
+  cnpj varchar(14) NOT NULL,
+  name varchar(100) DEFAULT NULL,
+  phone int DEFAULT NULL,
+  email varchar(100) DEFAULT NULL,
+  startDate date,
+  PRIMARY KEY (cnpj)
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- dbfiis4u.classification definition
+
+CREATE TABLE classification (
+  id int NOT NULL AUTO_INCREMENT,
+  name varchar(150) DEFAULT NULL,
+  isPaper tinyint(1) NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- dbfiis4u.fee definition
+
+CREATE TABLE fee (
+  id int NOT NULL AUTO_INCREMENT,
+  managementFee decimal(10,0) DEFAULT NULL,
+  admFee decimal(10,0) DEFAULT NULL,
+  performanceFee decimal(10,0) DEFAULT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- dbfiis4u.manager definition
+
+CREATE TABLE manager (
+  cnpj varchar(14) NOT NULL,
+  name varchar(100) DEFAULT NULL,
+  phone int DEFAULT NULL,
+  email varchar(100) DEFAULT NULL,
+  startDate date,
+  PRIMARY KEY (cnpj)
+) ENGINE=InnoDB AUTO_INCREMENT=209 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- dbfiis4u.ticker definition
+
+CREATE TABLE ticker (
+  symbol varchar(6) NOT NULL,
+  fundName varchar(150) DEFAULT NULL,
+  numQuotaHolders int DEFAULT NULL,
+  assetQuantities int DEFAULT NULL,
+  ipoDate date DEFAULT NULL,
+  fundSite varchar(150) DEFAULT NULL,
+  percentageCash decimal(15,2) DEFAULT NULL,
+  typeManagement enum('Ativa','Passiva') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  numQuotas int DEFAULT NULL,
+  cnpj varchar(14) DEFAULT NULL,
+  active tinyint(1) DEFAULT NULL,
+  classificationId int DEFAULT NULL,
+  administrationId varchar(14) DEFAULT NULL,
+  managerId varchar(14) DEFAULT NULL,
+  feeId int DEFAULT NULL,
+  targetAudience enum('geral','qualificado','profissional','qp') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  PRIMARY KEY (symbol),
+  KEY classification_ticker (classificationId),
+  KEY administration_ticker (administrationId),
+  KEY manager_ticker (managerId),
+  KEY fee_ticker (feeId),
+  CONSTRAINT administration_ticker FOREIGN KEY (administrationId) REFERENCES administration (cnpj),
+  CONSTRAINT classification_ticker FOREIGN KEY (classificationId) REFERENCES classification (id),
+  CONSTRAINT fee_ticker FOREIGN KEY (feeId) REFERENCES fee (id),
+  CONSTRAINT manager_ticker FOREIGN KEY (managerId) REFERENCES manager (cnpj)
+) ENGINE=InnoDB AUTO_INCREMENT=647 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- dbfiis4u.dividend definition
+
+CREATE TABLE dividend (
+  comDate date DEFAULT NULL,
+  exDate date not NULL,
+  price decimal(10,2) DEFAULT NULL,
+  symbol varchar(6) NOT NULL,
+  PRIMARY KEY (symbol, exDate),
+  KEY ticker_dividend (symbol),
+  CONSTRAINT ticker_dividend FOREIGN KEY (symbol) REFERENCES ticker (symbol)
+) ENGINE=InnoDB AUTO_INCREMENT=941 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- dbfiis4u.historicalData definition
+
+CREATE TABLE historicalData (
+  dateBase date not null,
+  price decimal(10,2) DEFAULT NULL,
+  vol decimal(10,2) DEFAULT NULL,
+  symbol varchar(6) NOT NULL,
+  PRIMARY KEY (symbol, dateBase),
+  KEY ticker_historicalData (symbol),
+  CONSTRAINT ticker_historicalData FOREIGN KEY (symbol) REFERENCES ticker (symbol)
+) ENGINE=InnoDB AUTO_INCREMENT=648 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- dbfiis4u.issuances definition
+
+CREATE TABLE issuances (
+  dateBase date not NULL,
+  price decimal(10,2) DEFAULT NULL,
+  marketCap decimal(15,2) DEFAULT NULL,
+  numQuotas int DEFAULT NULL,
+  symbol varchar(6) NOT NULL,
+  PRIMARY KEY (symbol, dateBase),
+  KEY ticker_issuances (symbol),
+  CONSTRAINT ticker_issuances FOREIGN KEY (symbol) REFERENCES ticker (symbol)
+) ENGINE=InnoDB AUTO_INCREMENT=1059 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
